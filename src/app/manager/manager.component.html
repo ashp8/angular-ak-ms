@@ -1,5 +1,5 @@
-<div class="p-5 font-extrabold text-white h-screen bg-gradient-to-r from-green-500 to-blue-600 ">
-  <div class="flex flex-col justify-between  bottom-0 text-gray-700 p-5 rounded-md shadow-md bg-gray-100">
+<div class="shide p-5 font-extrabold text-white h-screen bg-gradient-to-r from-green-500 to-blue-600 overflow-scroll">
+  <div class="flex flex-col justify-evenly  bottom-0 text-gray-700 p-5 rounded-md shadow-md bg-gray-100">
     <div class="grid grid-cols-5 bg-gray-300 rounded-sm p-2 ">
       <div>SR</div>
       <div>Name</div>
@@ -9,7 +9,7 @@
     </div>
     <div>
       <div  *ngIf="(list | async); else showLoading">
-        <div class="etr relative grid grid-cols-5 p-2 rounded-sm" *ngFor="let item of list | async; let index=index">
+        <div class="etr relative grid grid-cols-5 m-1 p-2 rounded-sm" *ngFor="let item of list | async; let index=index">
             <div>{{index + 1}}</div>
             <div>{{item.name}}</div>
             <div>{{item.price}}</div>
@@ -25,13 +25,13 @@
   </div>
   <div class="mgr-cnt grid grid-cols-4 gap-3">
     <div>
-      Total:
+      Total: $$
     </div>
     <div>
-      Ashis: {{ash}}F
+      Ashis: {{ash}} F
     </div>
-    <div>Nayon: {{nayon}}F</div>
-    <div>Diff: {{diff}}</div>
+    <div>Nayon: {{nayon}} F</div>
+    <div>Diff: {{diff}} F</div>
   </div>
 
   <div class="mgr-cnt">

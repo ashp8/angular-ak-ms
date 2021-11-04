@@ -60,6 +60,9 @@ export class ManagerComponent implements OnInit {
 
   addData(): void{
     let guid = this.db.createPushId();
+    if(isNaN(this.price)){
+      this.price = 0;
+    }
     const obj:Purchase = {
       id: guid,
       price: this.price,
@@ -91,7 +94,7 @@ export class ManagerComponent implements OnInit {
   selector: 'app-settings',
   template: `
     <div class="p-4 h-screen bg-gradient-to-r from-green-500 to-blue-600">
-      <div class="grid gap-4 grid-cols-3 m-20 p-5  bottom-0 text-gray-700 rounded-md shadow-md bg-gray-100">
+      <div class="grid gap-4 w-auto grid-cols-3 my-20 p-5  bottom-0 text-gray-700 rounded-md shadow-md bg-gray-100">
         <input class="inps" type="text" placeholder="hello hi" [(ngModel)]="current" />
         <button (click)=set() style="color:white;" class="btn bg-pink-300">Set</button>
         <button (click)="reset()" style="color:white;" class="btn bg-pink-300">Reset</button>
@@ -106,6 +109,9 @@ export class SettingsComponent implements OnInit{
 
   constructor(public db: AngularFireDatabase, private auth: AuthService, private route: Router){
     this.config = this.db.object('config').valueChanges();
+    this.config.subscribe(data=>{
+      this.current = data.date;
+    });
   }
   reset(): void{
     let dt = new Date();

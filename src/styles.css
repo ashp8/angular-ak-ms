@@ -23,3 +23,7 @@
 .mgr-cnt {
   @apply mt-4 flex flex-col md:flex-row sm:flex-row justify-between  bottom-0 text-gray-800 p-5 rounded-md shadow-md bg-gray-100;
 }
+
+.shide::-webkit-scrollbar {
+  display: none;
+}

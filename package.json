@@ -1,0 +1,11 @@
+{
+  "name": "ak-ms",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ashp8/angular-ak-ms.git",
+  "author": "ashp8 <natsupersonal@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

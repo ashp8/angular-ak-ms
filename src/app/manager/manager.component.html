@@ -1,0 +1,55 @@
+<div class="p-5 font-extrabold text-white h-screen bg-gradient-to-r from-green-500 to-blue-600 ">
+  <div class="flex flex-col justify-between  bottom-0 text-gray-700 p-5 rounded-md shadow-md bg-gray-100">
+    <div class="grid grid-cols-5 bg-gray-300 rounded-sm p-2 ">
+      <div>SR</div>
+      <div>Name</div>
+      <div>Price</div>
+      <div>Who?</div>
+      <div>Date</div>
+    </div>
+    <div>
+      <div  *ngIf="(list | async); else showLoading">
+        <div class="etr relative grid grid-cols-5 p-2 rounded-sm" *ngFor="let item of list | async; let index=index">
+            <div>{{index + 1}}</div>
+            <div>{{item.name}}</div>
+            <div>{{item.price}}</div>
+            <div>{{item.displayName}}</div>
+            <div class="overflow-hidden">{{item.date}}</div>
+            <button (click)="delete(item.id)" class="p-2 bg-red-600 rounded-md absolute right-0">X</button>
+        </div>
+      </div>
+      <ng-template #showLoading>
+        Loading...
+      </ng-template>
+    </div>
+  </div>
+  <div class="mgr-cnt grid grid-cols-4 gap-3">
+    <div>
+      Total:
+    </div>
+    <div>
+      Ashis: {{ash}}F
+    </div>
+    <div>Nayon: {{nayon}}F</div>
+    <div>Diff: {{diff}}</div>
+  </div>
+
+  <div class="mgr-cnt">
+    <div class="flex flex-col">
+      <label for="name">Name</label>
+      <input [(ngModel)]="name" type="text" class="inps" id="name" placeholder="name" />
+    </div>
+    <div class="flex flex-col">
+      <label for="price">Price</label>
+      <input [(ngModel)]="price" type="text" class="inps" id="price" placeholder="price" />
+    </div>
+    <div class="flex flex-col">
+      <label for="name">Date</label>
+      <input type="text" id="date" class="inps" disabled value="{{date}}" />
+    </div>
+    <div class="flex flex-col mt-4">
+      <button (click)="addData()" style="color: white;" class="btn bg-pink-500 shadow-md">Add me!</button>
+    </div>
+
+  </div>
+</div>

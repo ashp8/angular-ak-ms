@@ -36,6 +36,7 @@ export class ManagerComponent implements OnInit {
       this.list = this.db.list(`data/${data.date}`).valueChanges();
       this.onlydate = data.date;
       this.list.subscribe(n=>{
+        this.ash = 0;this.nayon = 0;
         n.forEach((s: any)=>{
           if(s.displayName === "Ashis"){
             this.ash += parseInt(s.price);
@@ -119,9 +120,7 @@ export class SettingsComponent implements OnInit{
     this.db.object('config').set({flag: "current", date: dts});
   }
   set(): void{
-    this.config?.subscribe(data=>{
-      this.db.object('config').update({flag: "!current", date: this.current});
-    });
+    this.db.object('config').update({flag: "!current", date: this.current});
   }
   changeRoutes(): void{
     this.auth.user.subscribe(user=>{

@@ -46,6 +46,7 @@ export class ManagerComponent implements OnInit {
       this.list = this.db.list(`data/${data.date}`).valueChanges();
       this.onlydate = data.date;
       this.list.subscribe(n=>{
+        this.total = 0;
         n.forEach((s: any)=>{
           this.total += !isNaN(s.price)?parseInt(s.price): 0;
         });
@@ -66,7 +67,7 @@ export class ManagerComponent implements OnInit {
   updateUser(): void{
     firebase.auth().currentUser?.updateProfile({
       displayName: "Porag",
-      photoURL: "https://picsum.photos/200",
+      photoURL: "https://scontent.fjsr6-1.fna.fbcdn.net/v/t1.6435-9/86347626_795833770904755_6751762101972238336_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=8bfeb9&_nc_eui2=AeHgBAwkvobAAIDZqdnWba9z0ysjWFiUcbjTKyNYWJRxuPbMxHg2ytaFP9XL824IKcuqow9NM-ELK0v850Kwe6Mo&_nc_ohc=ZRtmv_PvMbcAX9ffuG_&tn=Ai_EjT0K837rsv0o&_nc_ht=scontent.fjsr6-1.fna&oh=00_AT9PJ_K35ZteGr5lveeBArglgBn0RbGGGj-9E8GDFQLnmw&oe=61FCEDF5",
     }).then(()=>{}, err=>{console.log(err)});
   };
 

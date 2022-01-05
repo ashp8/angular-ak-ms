@@ -3,7 +3,7 @@
     <div class="grid grid-cols-4 bg-gray-300 rounded-sm p-2 ">
       <div>SR</div>
       <div>Name</div>
-      <div>Price</div>
+      <div>Ammount</div>
       <div>Who?</div>
       <!-- <div>Date</div> -->
     </div>
@@ -12,10 +12,10 @@
         <div class="etr relative grid grid-cols-4 m-1 p-2 rounded-sm" *ngFor="let item of list | async; let index=index">
             <div>{{index + 1}}</div>
             <div>{{item.name}}</div>
-            <div>{{item.price}}</div>
+            <div>{{item.ammount}}</div>
             <div>{{item.displayName}}</div>
             <!-- <div class="overflow-hidden">{{item.date}}</div> -->
-            <button (click)="delete(item.id)" class="p-2 bg-red-600 rounded-md text-white absolute right-0">X</button>
+            <button (click)="delete(item.id)" class="p-2 bg-red-600 text-white rounded-md absolute right-0">X</button>
         </div>
       </div>
       <ng-template #showLoading>
@@ -25,18 +25,35 @@
   </div>
   <div class="mgr-cnt grid grid-cols-4 gap-3">
     <div>
-      Total: ${{total}}
+      Nayon: {{ammountList.nayon}} F
     </div>
+    <div>
+      Monojit: {{ammountList.monojit}} F
+    </div>
+    <div>
+      Ashis: {{ammountList.ashis}} F
+    </div>
+    <div>
+      Porag: {{ammountList.porag}} F
+    </div>
+
+    <!-- <div>Nayon: {{nayon}} F</div> -->
   </div>
 
   <div class="mgr-cnt">
     <div class="flex flex-col">
       <label for="name">Name</label>
-      <input [(ngModel)]="name" type="text" class="inps" id="name" placeholder="name" />
+      <!-- <input [(ngModel)]="name" type="text" class="inps" id="name" placeholder="name" /> -->
+      <select [(ngModel)]="name" id="name">
+        <option value="nayon">Nayon</option>
+        <option value="ashis">Ashis</option>
+        <option value="monojit">Monjit</option>
+        <option value="porag">Porag</option>
+      </select>
     </div>
     <div class="flex flex-col">
-      <label for="price">Price</label>
-      <input [(ngModel)]="price" type="text" class="inps" id="price" placeholder="price" />
+      <label for="price">Ammount</label>
+      <input [(ngModel)]="ammount" type="text" class="inps" id="price" placeholder="price" />
     </div>
     <div class="flex flex-col">
       <label for="name">Date</label>

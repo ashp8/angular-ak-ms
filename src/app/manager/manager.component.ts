@@ -13,6 +13,18 @@ interface Purchase{
   date: string;
   id: string;
 };
+interface Ammount{
+  name: number;
+}
+
+interface Debit{
+  displayName: string | undefined | null;
+  ammount: number;
+  name: string | undefined;
+  description?: string | null;
+  date: string;
+  id: string;
+}
 
 @Component({
   selector: 'app-manager',
@@ -24,11 +36,9 @@ export class ManagerComponent implements OnInit {
   price: number = 0;
   date: Date = new Date();
   list?: Observable<any>;
-  nayon:number = 0;
-  ash:number = 0;
-  diff: number = 0;
   onlydate: string =`${this.date.getMonth()+1}-${this.date.getFullYear()}`;
   config?: Observable<any>;
+  total: number = 0;
   
   constructor(private auth: AuthService, private route: Router, private db: AngularFireDatabase) { 
     this.config = this.db.object('config').valueChanges();
@@ -36,15 +46,9 @@ export class ManagerComponent implements OnInit {
       this.list = this.db.list(`data/${data.date}`).valueChanges();
       this.onlydate = data.date;
       this.list.subscribe(n=>{
-        this.ash = 0;this.nayon = 0;
         n.forEach((s: any)=>{
-          if(s.displayName === "Ashis"){
-            this.ash += parseInt(s.price);
-          }else if(s.displayName === "Nayon"){
-            this.nayon += parseInt(s.price);
-          }
+          this.total += !isNaN(s.price)?parseInt(s.price): 0;
         });
-        this.diff = Math.abs(this.nayon - this.ash);
       });
       
     })
@@ -58,6 +62,13 @@ export class ManagerComponent implements OnInit {
       };
     });
   }
+
+  updateUser(): void{
+    firebase.auth().currentUser?.updateProfile({
+      displayName: "Porag",
+      photoURL: "https://picsum.photos/200",
+    }).then(()=>{}, err=>{console.log(err)});
+  };
 
   addData(): void{
     let guid = this.db.createPushId();
@@ -128,6 +139,74 @@ export class SettingsComponent implements OnInit{
         this.route.navigate(['/login']);
       };
     });
+  }
+
+
+  ngOnInit(){
+    this.changeRoutes();
+  }
+}
+
+@Component({
+    selector: "app-debit",
+    templateUrl: './debits.component.html',
+    styleUrls: ['./manager.component.css']
+  }
+)
+export class DebitComponents implements OnInit{
+  name: string = "nayon";
+  ammount: number = 0;
+  date: Date = new Date();
+  onlydate: string =`${this.date.getMonth()+1}-${this.date.getFullYear()}`;
+  list?: Observable<any>;
+  config?: Observable<any>;
+  ammountList: any = {nayon: 0,ashis: 0,monojit: 0,porag: 0};
+
+
+  constructor(private auth: AuthService, private route: Router, private db: AngularFireDatabase){
+    this.config = this.db.object('config').valueChanges();
+    this.config.subscribe(data=>{
+      this.list = this.db.list(`debits/${data.date}`).valueChanges();
+      this.onlydate = data.date;
+      this.list.subscribe(n=>{
+        this.ammountList = {nayon: 0,ashis: 0,monojit: 0,porag: 0};
+        n.forEach((s: any)=>{
+          this.ammountList[s.name] += !isNaN(s.ammount) ? parseInt(s.ammount) : 0;
+        });
+      });
+      
+    });
+  }
+
+  changeRoutes(): void{
+    this.auth.user.subscribe(user=>{
+      if(user === null){
+        this.route.navigate(['/login']);
+      };
+    });
+  }
+  addData(): void{
+    let guid = this.db.createPushId();
+    if(isNaN(this.ammount)){
+      this.ammount = 0;
+    }
+    const obj:Debit = {
+      id: guid,
+      ammount: this.ammount,
+      name: this.name,
+      date: this.date.toISOString(),
+      displayName:firebase.auth().currentUser?.displayName
+    };
+    this.db.object(`debits/${this.onlydate}/${guid}`).set(obj).then(_=>{
+      console.log("succeeddeed");
+    }).catch(err=>{
+      console.log(err);
+    });
+    ;  
+  };
+
+  delete(id: string){
+    this.db.object(`debits/${this.onlydate}/${id}`).remove();
   }
 
 

@@ -22,7 +22,7 @@
             <div class="flex flex-1 flex-col w-screen sm:w-auto md:w-auto sm:flex-row md:flex-row  sm:space-x-4 md:space-x-4">
               <a (click)="selectOne(0)" [routerLink]="['/']" [class.slted]="0 === stype" class="text-gray-300 hover:bg-gray-700  px-3 py-2 md:rounded-md sm:rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
               <a (click)="selectOne(1)" href="#" [class.slted]="1 === stype" class="alink">Team</a>
-              <a (click)="selectOne(2)" href="#" [class.slted]="2 === stype" class="alink">Projects</a>
+              <a (click)="selectOne(2)" [routerLink]="['/debits']" [class.slted]="2 === stype" class="alink">Debits</a>
               <a [class.hidden]="!(auth.user | async)" (click)="selectOne(3)" [routerLink]="['/manager']"  [class.slted]="3 === stype" class="alink">Manager</a>
             </div>
           </div>
